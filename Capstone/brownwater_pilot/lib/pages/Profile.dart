@@ -50,6 +50,36 @@ class _UserProfileState extends State<UserProfile> {
     }
   }
 
+  _deleteUser() async {
+    FirebaseUser _user = await _firebaseAuth.currentUser();
+    return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Delete Profile?'),
+            content: const Text('This will permanently remove your account.'),
+            actions: <Widget>[
+              FlatButton(
+                child: const Text('CANCEL'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                child: const Text('ACCEPT'),
+                onPressed: () {
+                  _user.delete();
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (BuildContext ctx) {
+                    return HomePage();
+                  }));
+                },
+              )
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -210,6 +240,45 @@ class _UserProfileState extends State<UserProfile> {
                                   'SUBMIT',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(color: Colors.blueGrey),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              // DELETE ACCOUNT BUTTON
+              Container(
+                margin: const EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                ),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: FlatButton(
+                        splashColor: Colors.white,
+                        color: Colors.red,
+                        disabledColor: Colors.white.withOpacity(.5),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30)),
+                        onPressed: () {
+                          _deleteUser();
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(vertical: 16),
+                                child: Text(
+                                  'DELETE ACCOUNT',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(color: Colors.white),
                                 ),
                               ),
                             )

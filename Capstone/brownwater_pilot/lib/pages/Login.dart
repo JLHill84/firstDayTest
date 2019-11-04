@@ -71,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
               Padding(
                 padding: EdgeInsets.only(top: 72, bottom: 36),
                 child: Icon(
-                  Icons.rss_feed,
+                  Icons.explore,
                   size: 180,
                   color: Colors.white,
                 ),

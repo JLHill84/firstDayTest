@@ -97,7 +97,7 @@ class _SignupPageState extends State<SignupPage> {
               Padding(
                 padding: EdgeInsets.only(top: 72, bottom: 36),
                 child: Icon(
-                  Icons.rss_feed,
+                  Icons.explore,
                   size: 60,
                   color: Colors.white,
                 ),
