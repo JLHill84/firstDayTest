@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:weather/weather.dart';
+// import 'package:location/location.dart';
 
 class AISPage extends StatefulWidget {
   @override
@@ -17,7 +19,13 @@ class _AISPageState extends State<AISPage> {
   MapType _currentMapType = MapType.normal;
 
   static final CameraPosition _position1 = CameraPosition(
-      bearing: 192, target: LatLng(29.760427, -95.369804), tilt: 60, zoom: 11);
+      bearing: 0, target: LatLng(29.760427, -95.369804), tilt: 0, zoom: 11);
+
+  Future<void> _goToPosition1() async {
+    
+    final GoogleMapController controller = await _controller.future;
+    controller.animateCamera(CameraUpdate.newCameraPosition(_position1));
+  }
 
   _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
@@ -30,7 +38,7 @@ class _AISPageState extends State<AISPage> {
   _onMapTypesButtonPressed() {
     setState(() {
       _currentMapType = _currentMapType == MapType.normal
-          ? MapType.satellite
+          ? MapType.hybrid
           : MapType.normal;
     });
   }
@@ -53,7 +61,7 @@ class _AISPageState extends State<AISPage> {
     return FloatingActionButton(
       onPressed: function,
       materialTapTargetSize: MaterialTapTargetSize.padded,
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.blueGrey,
       child: Icon(icon, size: 36),
     );
   }
@@ -72,6 +80,9 @@ class _AISPageState extends State<AISPage> {
             mapType: _currentMapType,
             markers: _markers,
             onCameraMove: _onCameraMove,
+            myLocationButtonEnabled: true,
+            myLocationEnabled: true,
+            compassEnabled: true,
           ),
           Padding(
               padding: EdgeInsets.all(16),
@@ -79,11 +90,15 @@ class _AISPageState extends State<AISPage> {
                   alignment: Alignment.topRight,
                   child: Column(
                     children: <Widget>[
-                      button(_onAddMarkerButtonPressed, Icons.add_location),
+                      // button(_onAddMarkerButtonPressed, Icons.add_location),
                       SizedBox(
                         height: 16,
                       ),
-                      // button(_onMapTypesButtonPressed, Icons.map)
+                      // button(_onMapTypesButtonPressed, Icons.map),
+                      // SizedBox(
+                      //   height: 16,
+                      // ),
+                      button(_goToPosition1, Icons.location_searching),
                     ],
                   ))),
         ]),
