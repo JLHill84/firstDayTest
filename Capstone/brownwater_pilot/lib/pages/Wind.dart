@@ -11,20 +11,20 @@ class Wind extends StatefulWidget {
   _WindState createState() => _WindState();
 }
 
-class WindStation {
-  String name;
-  String speed;
-  double bearing;
-  double lat;
-  double lng;
+// class WindStation {
+//   String name;
+//   String speed;
+//   double bearing;
+//   double lat;
+//   double lng;
 
-  WindStation.fromJson(Map<String, dynamic> data)
-      : name = data['name'],
-        speed = data['windSpeed']['value'],
-        bearing = data['windDirection']['value'],
-        lat = data['geometry']['coordinates'][1],
-        lng = data['geometry']['coordinates'][1];
-}
+//   WindStation.fromJson(Map<String, dynamic> data)
+//       : name = data['name'],
+//         speed = data['windSpeed']['value'],
+//         bearing = data['windDirection']['value'],
+//         lat = data['geometry']['coordinates'][1],
+//         lng = data['geometry']['coordinates'][1];
+// }
 
 class _WindState extends State<Wind> {
   Completer<GoogleMapController> _controller = Completer();
@@ -64,19 +64,10 @@ class _WindState extends State<Wind> {
       });
 
       Map data3 = json.decode(loopResponse.body);
-      var station = WindStation.fromJson(data3);
-      print(station);
+      print(data3['properties']['windSpeed']['value']);
     }
 
-    // print(weatherStations);
-
     return data2;
-    // if (response.statusCode == 200) {
-    //   // debugPrint(json.decode(response.body));
-    //   return json.decode(response.body);
-    // }
-    // debugPrint('Response status: ${response.statusCode}');
-    // debugPrint('Response body: ${response.body[]}');
   }
 
   _onMapCreated(GoogleMapController controller) {}
